@@ -1,1 +1,1 @@
-labs of opearing systems and system software course
+labs of operating systems and system software course
