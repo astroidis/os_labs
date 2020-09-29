@@ -3,8 +3,9 @@
 #include <wchar.h>
 #include <locale.h>
 
+
 int main(){
-    setlocale(LC_ALL, "ru_RU.UTF-8");
+    setlocale(LC_ALL, "RUS");
     wint_t a = L'\x440';
 
     putwchar(a);
