@@ -1,3 +1,5 @@
+/* most frequent character in a file */
+
 #include <stdio.h>
 #include <ctype.h>
 

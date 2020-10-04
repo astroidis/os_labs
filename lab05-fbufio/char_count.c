@@ -1,3 +1,5 @@
+/* how many times given character occurs in a given file */
+
 #include <stdio.h>
 
 
