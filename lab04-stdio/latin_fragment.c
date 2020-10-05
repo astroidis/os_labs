@@ -2,8 +2,11 @@
 
 
 int main(){
-    const char *str =
-        "LO.REM IPSUM DOLOR SIT AMET CONSECTETUR ADIPISICING ELIT";
+    // "LO1REM IPSUM DOLOR SIT. AMET CONSECTETUR ADIPISICING ELIT";
+
+    char str[255];
+    printf("Enter text: ");
+    scanf("%[^.]", str);
 
     int word_count = 0;
     for (char *p = str; (*p != '.') && (*p != 0); p++){
