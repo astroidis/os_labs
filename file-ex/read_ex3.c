@@ -1,11 +1,5 @@
 #include <stdio.h>
-
-
-typedef struct sigrecord {
-    int code;
-    char name[10];
-    char descr[100];
-} Sigrecord;
+#include "sigrecord.h"
 
 
 int main(){
