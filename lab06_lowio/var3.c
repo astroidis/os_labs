@@ -34,15 +34,15 @@ int main(int argc, char *argv[]){
         case 'a':
             a = atof(optarg);
             break;
-        
+
         case 'b':
             b = atof(optarg);
             break;
-        
+
         case 'n':
             n = atoi(optarg);
             break;
-        
+
         case 'h':
         case '?':
         default:
@@ -59,7 +59,7 @@ int main(int argc, char *argv[]){
 
     char *header = "x\t\tsin(x)\tcos(x)\texp(x)\n";
     write(fd, header, strlen(header));
-    
+
     double h = (b - a) / n;
     char buf[50];
     for (double x = a; x < b + h/2; x += h){
@@ -72,10 +72,11 @@ int main(int argc, char *argv[]){
     }
 
     close(fd);
+    return 0;
 }
 
 void showHelp(){
-    fprintf(stderr, 
+    fprintf(stderr,
         "-h, --help\n"
         "\tDisplay help\n\n"
         "-f, --file\n"
