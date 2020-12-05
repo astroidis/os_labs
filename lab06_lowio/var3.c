@@ -4,15 +4,9 @@
  * строке.
 **/
 
-#include <math.h>
-#include <getopt.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
 
-void showHelp();
+#include "var3.h"
+
 
 int main(int argc, char *argv[]){
     const char *shortopt = "hf:a:b:n:";
@@ -51,41 +45,10 @@ int main(int argc, char *argv[]){
         }
     }
 
-    int fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0440);
-    if (fd == -1){
-        perror("open");
-        exit(EXIT_FAILURE);
+    if (writeFile(filename, a, b, n) == -1){
+        fprintf(stderr, "Error while writing to file\n");
+        return -1;
     }
 
-    char *header = "x\t\tsin(x)\tcos(x)\texp(x)\n";
-    write(fd, header, strlen(header));
-
-    double h = (b - a) / n;
-    char buf[50];
-    for (double x = a; x < b + h/2; x += h){
-        double x_sin = sin(x);
-        double x_cos = cos(x);
-        double x_exp = exp(x);
-
-        sprintf(buf, "%.2lf\t%.2lf\t%.2lf\t%.2lf\n", x, x_sin, x_cos, x_exp);
-        write(fd, buf, strlen(buf));
-    }
-
-    close(fd);
     return 0;
-}
-
-void showHelp(){
-    fprintf(stderr,
-        "-h, --help\n"
-        "\tDisplay help\n\n"
-        "-f, --file\n"
-        "\tSpecify output file name\n\n"
-        "-a\n"
-        "\tSet lower bound\n\n"
-        "-b\n"
-        "\tSet upper bound\n\n"
-        "-n\n"
-        "\tSet number of steps\n"
-    );
 }
