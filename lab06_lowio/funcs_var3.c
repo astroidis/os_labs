@@ -18,7 +18,7 @@ void showHelp(){
 
 
 int writeFile(char *filename, double start, double stop, int nsteps){
-    int fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0440);
+    int fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0640);
     if (fd == -1){
         return -1;
     }
