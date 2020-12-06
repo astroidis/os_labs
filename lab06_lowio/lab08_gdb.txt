@@ -1,0 +1,297 @@
+user@user-VirtualBox:~/Code/C/os_labs/lab06_lowio$ gcc -g var3.c funcs_var3.c -lm -o var3
+
+user@user-VirtualBox:~/Code/C/os_labs/lab06_lowio$ gdb
+GNU gdb (Ubuntu 9.1-0ubuntu1) 9.1
+Copyright (C) 2020 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word".
+
+(gdb) file var3
+Reading symbols from var3...
+
+(gdb) break 48
+Breakpoint 1 at 0x1471: file var3.c, line 48.
+
+(gdb) list 48
+43	            showHelp();
+44	            exit(EXIT_FAILURE);
+45	        }
+46	    }
+47	
+48	    if (writeFile(filename, a, b, n) == -1){
+49	        fprintf(stderr, "Error while writing to file\n");
+50	        return -1;
+51	    }
+52	
+
+(gdb) run -f res.txt -a 1 -b 5 -n 10
+Starting program: /home/user/Code/C/os_labs/lab06_lowio/var3 -f res.txt -a 1 -b 5 -n 10
+
+Breakpoint 1, main (argc=9, argv=0x7fffffffdee8) at var3.c:48
+48	    if (writeFile(filename, a, b, n) == -1){
+
+(gdb) s
+writeFile (filename=0x7fffffffdd80 "\016`UUUU", start=0, 
+    stop=6.953349046099808e-310, nsteps=0) at funcs_var3.c:20
+20	int writeFile(char *filename, double start, double stop, int nsteps){
+(gdb) s
+21	    int fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0640);
+
+(gdb) n
+22	    if (fd == -1){
+
+(gdb) n
+26	    char *header = "x\t\tsin(x)\tcos(x)\texp(x)\n";
+
+(gdb) n
+27	    if (write(fd, header, strlen(header)) < strlen(header)){
+
+(gdb) print strlen(header)
+$3 = 24
+
+(gdb) n
+32	    double h = (stop - start) / nsteps;
+
+(gdb) n
+34	    for (double x = start; x < stop + h/2; x += h){
+
+(gdb) print h
+$4 = 0.40000000000000002
+
+(gdb) display x
+1: x = 6.9533558074631705e-310
+
+(gdb) n
+35	        double x_sin = sin(x);
+1: x = 1
+
+(gdb) display x
+1: x = 1
+
+(gdb) n
+36	        double x_cos = cos(x);
+1: x = 1
+
+(gdb) display x_sin
+2: x_sin = 0.8414709848078965
+
+(gdb) n
+37	        double x_exp = exp(x);
+1: x = 1
+2: x_sin = 0.8414709848078965
+
+(gdb) display x_cos
+3: x_cos = 0.54030230586813977
+
+(gdb) n
+39	        sprintf(buf, "%.2lf\t%.2lf\t%.2lf\t%.2lf\n", x, x_sin, x_cos, x_exp);
+1: x = 1
+2: x_sin = 0.8414709848078965
+3: x_cos = 0.54030230586813977
+
+(gdb) display x_exp
+4: x_exp = 2.7182818284590451
+
+(gdb) n
+41	        if (write(fd, buf, strlen(buf)) < strlen(buf)){
+1: x = 1
+2: x_sin = 0.8414709848078965
+3: x_cos = 0.54030230586813977
+4: x_exp = 2.7182818284590451
+
+(gdb) n
+34	    for (double x = start; x < stop + h/2; x += h){
+1: x = 1
+
+(gdb) n
+35	        double x_sin = sin(x);
+1: x = 1.3999999999999999
+2: x_sin = 0.8414709848078965
+3: x_cos = 0.54030230586813977
+4: x_exp = 2.7182818284590451
+
+(gdb) n
+36	        double x_cos = cos(x);
+1: x = 1.3999999999999999
+2: x_sin = 0.98544972998846014
+3: x_cos = 0.54030230586813977
+4: x_exp = 2.7182818284590451
+
+(gdb) n
+37	        double x_exp = exp(x);
+1: x = 1.3999999999999999
+2: x_sin = 0.98544972998846014
+3: x_cos = 0.16996714290024104
+4: x_exp = 2.7182818284590451
+
+(gdb) n
+39	        sprintf(buf, "%.2lf\t%.2lf\t%.2lf\t%.2lf\n", x, x_sin, x_cos, x_exp);
+1: x = 1.3999999999999999
+2: x_sin = 0.98544972998846014
+3: x_cos = 0.16996714290024104
+4: x_exp = 4.0551999668446745
+
+(gdb) n
+41	        if (write(fd, buf, strlen(buf)) < strlen(buf)){
+1: x = 1.3999999999999999
+2: x_sin = 0.98544972998846014
+3: x_cos = 0.16996714290024104
+4: x_exp = 4.0551999668446745
+
+(gdb) n
+34	    for (double x = start; x < stop + h/2; x += h){
+1: x = 1.3999999999999999
+
+(gdb) n
+35	        double x_sin = sin(x);
+1: x = 1.7999999999999998
+2: x_sin = 0.98544972998846014
+3: x_cos = 0.16996714290024104
+4: x_exp = 4.0551999668446745
+
+(gdb) n
+36	        double x_cos = cos(x);
+1: x = 1.7999999999999998
+2: x_sin = 0.97384763087819526
+3: x_cos = 0.16996714290024104
+4: x_exp = 4.0551999668446745
+
+(gdb) n
+37	        double x_exp = exp(x);
+1: x = 1.7999999999999998
+2: x_sin = 0.97384763087819526
+3: x_cos = -0.22720209469308689
+4: x_exp = 4.0551999668446745
+
+(gdb) n
+39	        sprintf(buf, "%.2lf\t%.2lf\t%.2lf\t%.2lf\n", x, x_sin, x_cos, x_exp);
+1: x = 1.7999999999999998
+2: x_sin = 0.97384763087819526
+3: x_cos = -0.22720209469308689
+4: x_exp = 6.0496474644129448
+
+(gdb) n
+41	        if (write(fd, buf, strlen(buf)) < strlen(buf)){
+1: x = 1.7999999999999998
+2: x_sin = 0.97384763087819526
+3: x_cos = -0.22720209469308689
+4: x_exp = 6.0496474644129448
+(gdb) n
+34	    for (double x = start; x < stop + h/2; x += h){
+1: x = 1.7999999999999998
+(gdb) n
+35	        double x_sin = sin(x);
+1: x = 2.1999999999999997
+2: x_sin = 0.97384763087819526
+3: x_cos = -0.22720209469308689
+4: x_exp = 6.0496474644129448
+(gdb) n
+36	        double x_cos = cos(x);
+1: x = 2.1999999999999997
+2: x_sin = 0.80849640381959031
+3: x_cos = -0.22720209469308689
+4: x_exp = 6.0496474644129448
+
+(gdb) n
+37	        double x_exp = exp(x);
+1: x = 2.1999999999999997
+2: x_sin = 0.80849640381959031
+3: x_cos = -0.58850111725534549
+4: x_exp = 6.0496474644129448
+
+(gdb) n
+39	        sprintf(buf, "%.2lf\t%.2lf\t%.2lf\t%.2lf\n", x, x_sin, x_cos, x_exp);
+1: x = 2.1999999999999997
+2: x_sin = 0.80849640381959031
+3: x_cos = -0.58850111725534549
+4: x_exp = 9.0250134994341185
+
+(gdb) p x=4.5
+$1 = 4.5
+
+(gdb) n
+41	        if (write(fd, buf, strlen(buf)) < strlen(buf)){
+1: x = 4.5
+2: x_sin = 0.80849640381959031
+3: x_cos = -0.58850111725534549
+4: x_exp = 9.0250134994341185
+
+(gdb) n
+34	    for (double x = start; x < stop + h/2; x += h){
+1: x = 4.5
+
+(gdb) n
+35	        double x_sin = sin(x);
+1: x = 4.9000000000000004
+2: x_sin = 0.80849640381959031
+3: x_cos = -0.58850111725534549
+4: x_exp = 9.0250134994341185
+
+(gdb) n
+36	        double x_cos = cos(x);
+1: x = 4.9000000000000004
+2: x_sin = -0.98245261262433248
+3: x_cos = -0.58850111725534549
+4: x_exp = 9.0250134994341185
+
+(gdb) n
+37	        double x_exp = exp(x);
+1: x = 4.9000000000000004
+2: x_sin = -0.98245261262433248
+3: x_cos = 0.18651236942257576
+4: x_exp = 9.0250134994341185
+
+(gdb) n
+39	        sprintf(buf, "%.2lf\t%.2lf\t%.2lf\t%.2lf\n", x, x_sin, x_cos, x_exp);
+1: x = 4.9000000000000004
+2: x_sin = -0.98245261262433248
+3: x_cos = 0.18651236942257576
+4: x_exp = 134.28977968493552
+
+(gdb) n
+41	        if (write(fd, buf, strlen(buf)) < strlen(buf)){
+1: x = 4.9000000000000004
+2: x_sin = -0.98245261262433248
+3: x_cos = 0.18651236942257576
+4: x_exp = 134.28977968493552
+
+(gdb) n
+34	    for (double x = start; x < stop + h/2; x += h){
+1: x = 4.9000000000000004
+
+(gdb) n
+47	    close(fd);
+
+(gdb) n
+48	    return 0;
+
+(gdb) n
+49	}
+
+(gdb) n
+main (argc=9, argv=0x7fffffffdea8) at var3.c:48
+48	    if (writeFile(filename, a, b, n) == -1){
+
+(gdb) n
+53	    return 0;
+
+(gdb) n
+54	}
+
+(gdb) n
+[Inferior 1 (process 7414) exited normally]
+
+(gdb) q
+
+user@user-VirtualBox:~/Code/C/os_labs/lab06_lowio$ 
